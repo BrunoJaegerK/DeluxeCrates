@@ -6,6 +6,8 @@ import com.brunojaegerk.deluxecrates.Main;
 import com.brunojaegerk.deluxecrates.crates.CrateManager;
 import com.brunojaegerk.deluxecrates.commands.SetItemHandler;
 import com.brunojaegerk.deluxecrates.commands.KeyAllHandler;
+import com.brunojaegerk.deluxecrates.commands.DeleteCrateHandler;
+import com.brunojaegerk.deluxecrates.commands.ReloadCratesHandler;
 
 import cn.nukkit.Player;
 import cn.nukkit.item.Item;
@@ -66,6 +68,14 @@ public final class CratesCommand extends Command {
                 handleList(sender);
                 break;
 
+            case "delete":
+                new DeleteCrateHandler(plugin.getCrateManager()).execute(sender, args);
+                break;
+
+            case "reload":
+                new ReloadCratesHandler(plugin.getCrateManager()).execute(sender);
+                break;
+
             default:
                 sendHelp(sender);
                 break;
@@ -111,6 +121,8 @@ public final class CratesCommand extends Command {
         sender.sendMessage("§d/crates givekey <jugador> <caja> [cantidad] §7- Entregar llaves");
         sender.sendMessage("§d/crates keyall <caja> [cantidad] §7- Entregar llaves a todos");
         sender.sendMessage("§d/crates list §7- Mostrar todas las cajas registradas");
+        sender.sendMessage("§d/crates delete <nombre> §7- Eliminar una caja");
+        sender.sendMessage("§d/crates reload §7- Recargar las cajas");
     }
 
     private void handleGiveKey(CommandSender sender, String[] args) {
