@@ -10,6 +10,7 @@ import com.brunojaegerk.deluxecrates.commands.DeleteCrateHandler;
 import com.brunojaegerk.deluxecrates.commands.ReloadCratesHandler;
 import com.brunojaegerk.deluxecrates.commands.PreviewCrateHandler;
 import com.brunojaegerk.deluxecrates.commands.AddCommandHandler;
+import com.brunojaegerk.deluxecrates.commands.ListCommandsHandler;
 
 import cn.nukkit.Player;
 import cn.nukkit.item.Item;
@@ -88,6 +89,10 @@ public final class CratesCommand extends Command {
                 new ReloadCratesHandler(plugin.getCrateManager()).execute(sender);
                 break;
 
+            case "listcommands":
+                new ListCommandsHandler(plugin).execute(sender, args);
+                break;
+
             default:
                 sendHelp(sender);
                 break;
@@ -140,6 +145,9 @@ public final class CratesCommand extends Command {
         );
         sender.sendMessage(
                 "§d/crates addcommand <id> <comando> §7- Agregar un comando a una caja"
+        );
+        sender.sendMessage(
+                "§d/crates listcommands <id> §7- Mostrar los comandos de una caja"
         );
     }
 
