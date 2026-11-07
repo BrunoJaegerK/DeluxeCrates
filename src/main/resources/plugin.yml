@@ -9,6 +9,8 @@ load: POSTWORLD
 
 depend:
   - FormConstructor
+softdepend:
+  - FakeInventories
 
 permissions:
   deluxecrates.admin:

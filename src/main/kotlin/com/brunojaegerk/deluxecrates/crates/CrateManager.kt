@@ -83,6 +83,8 @@ class CrateManager(dataFolder: File) {
     fun load() {
         crates.clear()
 
+        config.reload()
+
         val allData = config.getAll()
         val crateSection = allData["crates"] as? Map<*, *> ?: return
 
@@ -120,6 +122,27 @@ class CrateManager(dataFolder: File) {
 
         crates[normalizedId] = crate.copy(
             itemData = itemData
+        )
+
+        save()
+        return true
+    }
+
+    @Synchronized
+    fun addCommand(id: String, command: String): Boolean {
+        val normalizedId = normalizeId(id)
+        val crate = crates[normalizedId] ?: return false
+
+        val normalizedCommand = command.trim()
+            .removePrefix("/")
+            .trim()
+
+        if (normalizedCommand.isBlank()) {
+            return false
+        }
+
+        crates[normalizedId] = crate.copy(
+            commands = crate.commands + normalizedCommand
         )
 
         save()

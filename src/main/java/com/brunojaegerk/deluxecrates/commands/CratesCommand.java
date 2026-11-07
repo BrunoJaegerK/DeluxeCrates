@@ -8,6 +8,8 @@ import com.brunojaegerk.deluxecrates.commands.SetItemHandler;
 import com.brunojaegerk.deluxecrates.commands.KeyAllHandler;
 import com.brunojaegerk.deluxecrates.commands.DeleteCrateHandler;
 import com.brunojaegerk.deluxecrates.commands.ReloadCratesHandler;
+import com.brunojaegerk.deluxecrates.commands.PreviewCrateHandler;
+import com.brunojaegerk.deluxecrates.commands.AddCommandHandler;
 
 import cn.nukkit.Player;
 import cn.nukkit.item.Item;
@@ -72,6 +74,16 @@ public final class CratesCommand extends Command {
                 new DeleteCrateHandler(plugin.getCrateManager()).execute(sender, args);
                 break;
 
+            case "preview":
+                new PreviewCrateHandler(plugin).execute(sender, args);
+                break;
+
+            case "addcommand":
+                new AddCommandHandler(
+                        plugin.getCrateManager()
+                ).execute(sender, args);
+                break;
+
             case "reload":
                 new ReloadCratesHandler(plugin.getCrateManager()).execute(sender);
                 break;
@@ -123,6 +135,12 @@ public final class CratesCommand extends Command {
         sender.sendMessage("§d/crates list §7- Mostrar todas las cajas registradas");
         sender.sendMessage("§d/crates delete <nombre> §7- Eliminar una caja");
         sender.sendMessage("§d/crates reload §7- Recargar las cajas");
+        sender.sendMessage(
+                "§d/crates preview <nombre> §7- Mostrar la vista previa de una caja"
+        );
+        sender.sendMessage(
+                "§d/crates addcommand <id> <comando> §7- Agregar un comando a una caja"
+        );
     }
 
     private void handleGiveKey(CommandSender sender, String[] args) {
