@@ -1,0 +1,9 @@
+# DeluxeCrates Messages
+
+prefix: "§5[DeluxeCrates] §r"
+
+messages:
+  plugin-enabled: "§aPlugin habilitado correctamente."
+  plugin-disabled: "§cPlugin deshabilitado."
+  no-permission: "§cNo tienes permiso para utilizar esto."
+  player-only: "§cEste comando solo puede utilizarse dentro del juego."

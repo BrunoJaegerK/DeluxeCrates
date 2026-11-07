@@ -1,0 +1,17 @@
+
+# DeluxeCrates Configuration
+
+settings:
+
+  # Economy integration
+  economy:
+    enabled: false
+
+  # Physical keys configuration
+  keys:
+    type: PHYSICAL
+
+  # Database configuration
+  storage:
+    type: SQLITE
+    file: crates.db

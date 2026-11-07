@@ -1,0 +1,11 @@
+name: DeluxeCrates
+main: com.brunojaegerk.deluxecrates.Main
+version: "1.0.0"
+api: ["1.0.0"]
+author: BrunoJaegerK
+description: Advanced Crate System for DeluxeMine Network
+
+load: POSTWORLD
+
+depend:
+  - FormConstructor
