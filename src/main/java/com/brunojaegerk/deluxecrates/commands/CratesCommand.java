@@ -5,11 +5,14 @@ import cn.nukkit.command.CommandSender;
 import com.brunojaegerk.deluxecrates.Main;
 import com.brunojaegerk.deluxecrates.crates.CrateManager;
 import com.brunojaegerk.deluxecrates.commands.SetItemHandler;
+import com.brunojaegerk.deluxecrates.commands.KeyAllHandler;
 
 import cn.nukkit.Player;
 import cn.nukkit.item.Item;
 import com.brunojaegerk.deluxecrates.crates.Crate;
 import com.brunojaegerk.deluxecrates.keys.KeyFactory;
+
+import java.util.List;
 
 public final class CratesCommand extends Command {
 
@@ -55,6 +58,14 @@ public final class CratesCommand extends Command {
                 handleGiveKey(sender, args);
                 break;
 
+            case "keyall":
+                new KeyAllHandler(plugin).execute(sender, args);
+                break;
+
+            case "list":
+                handleList(sender);
+                break;
+
             default:
                 sendHelp(sender);
                 break;
@@ -98,6 +109,8 @@ public final class CratesCommand extends Command {
         sender.sendMessage("§d/crates create <nombre> §7- Crear una caja");
         sender.sendMessage("§d/crates setitem <nombre> §7- Establecer el objeto de una caja");
         sender.sendMessage("§d/crates givekey <jugador> <caja> [cantidad] §7- Entregar llaves");
+        sender.sendMessage("§d/crates keyall <caja> [cantidad] §7- Entregar llaves a todos");
+        sender.sendMessage("§d/crates list §7- Mostrar todas las cajas registradas");
     }
 
     private void handleGiveKey(CommandSender sender, String[] args) {
@@ -176,4 +189,48 @@ public final class CratesCommand extends Command {
             );
         }
     }
+
+
+    private void handleList(CommandSender sender) {
+        List<Crate> crates = plugin.getCrateManager().getAll();
+
+        if (crates.isEmpty()) {
+            sender.sendMessage("§eNo hay cajas registradas en DeluxeCrates.");
+            return;
+        }
+
+        sender.sendMessage("§5§l========== DeluxeCrates ==========");
+        sender.sendMessage("§7Cajas registradas: §f" + crates.size());
+        sender.sendMessage("");
+
+        int index = 1;
+
+        for (Crate crate : crates) {
+            String itemData = crate.getItemData();
+
+            boolean hasItem = itemData != null && !itemData.isBlank();
+
+            String itemStatus = hasItem
+                    ? "§aEstablecido"
+                    : "§cPendiente";
+
+            sender.sendMessage(
+                    "§d" + index + ". §f" + crate.getDisplayName()
+            );
+
+            sender.sendMessage(
+                    "   §7ID: §f" + crate.getId()
+            );
+
+            sender.sendMessage(
+                    "   §7Objeto: " + itemStatus
+            );
+
+            index++;
+        }
+
+        sender.sendMessage("");
+        sender.sendMessage("§5§l=================================");
+    }
+
 }
