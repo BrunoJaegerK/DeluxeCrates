@@ -9,3 +9,8 @@ load: POSTWORLD
 
 depend:
   - FormConstructor
+
+permissions:
+  deluxecrates.admin:
+    description: Permite administrar DeluxeCrates.
+    default: op

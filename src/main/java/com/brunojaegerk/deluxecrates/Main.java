@@ -1,10 +1,14 @@
 package com.brunojaegerk.deluxecrates;
 
 import cn.nukkit.plugin.PluginBase;
+import com.brunojaegerk.deluxecrates.commands.CratesCommand;
+import com.brunojaegerk.deluxecrates.crates.CrateManager;
 
 public final class Main extends PluginBase {
 
     private static Main instance;
+
+    private CrateManager crateManager;
 
     @Override
     public void onEnable() {
@@ -22,6 +26,19 @@ public final class Main extends PluginBase {
                 "§a" + KotlinBootstrap.startupMessage()
         );
 
+        // Inicializar el administrador de cajas
+        crateManager = new CrateManager(getDataFolder());
+
+        getLogger().info(
+                "§aSe cargaron " + crateManager.getAll().size() + " cajas."
+        );
+
+        // Registrar comandos
+        getServer().getCommandMap().register(
+                "deluxecrates",
+                new CratesCommand(this)
+        );
+
         getLogger().info("§7Economía: desactivada");
         getLogger().info("§7Llaves: físicas");
         getLogger().info("§7Almacenamiento: SQLite");
@@ -34,6 +51,10 @@ public final class Main extends PluginBase {
 
     @Override
     public void onDisable() {
+        if (crateManager != null) {
+            crateManager.save();
+        }
+
         getLogger().info("§cDeluxeCrates deshabilitado.");
 
         instance = null;
@@ -45,8 +66,13 @@ public final class Main extends PluginBase {
         saveResource("messages.yml", false);
     }
 
+    public CrateManager getCrateManager() {
+        return crateManager;
+    }
+
     public static Main getInstance() {
         return instance;
     }
 }
+
 
